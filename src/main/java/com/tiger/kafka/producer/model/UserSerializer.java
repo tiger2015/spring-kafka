@@ -1,4 +1,4 @@
-package com.tiger.kafka.model;
+package com.tiger.kafka.producer.model;
 
 
 import com.alibaba.fastjson.JSON;

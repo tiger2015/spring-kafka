@@ -1,4 +1,4 @@
-package com.tiger.kafka.producer;
+package com.tiger.kafka.producer.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -19,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @PropertySource(value = {"file:${user.dir}/config/application.properties", "classpath:application.properties"},
         ignoreResourceNotFound = true)
-@ComponentScan(value = {"com.tiger.kafka.dao", "com.tiger.kafka.service", "com.tiger.kafka.producer"})
+@ComponentScan(value = {"com.tiger.kafka.producer"})
 public class KafkaProducerConfig {
     @Value("${kafka.bootstrap-servers}")
     private String servers;

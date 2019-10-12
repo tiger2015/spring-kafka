@@ -1,6 +1,6 @@
-package com.tiger.kafka.service;
+package com.tiger.kafka.producer.service;
 
-import com.tiger.kafka.dao.KafkaDao;
+import com.tiger.kafka.producer.dao.KafkaDao;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

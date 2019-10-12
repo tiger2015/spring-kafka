@@ -1,9 +1,7 @@
 package com.tiger.kafka;
 
 
-import com.tiger.kafka.consumer.KafkaConsumerConfig;
-import com.tiger.kafka.producer.KafkaProducerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import com.tiger.kafka.consumer.ConsumerApplicationConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.File;
@@ -16,7 +14,9 @@ public class ConsumerApplication {
         if (file.exists()) {
             System.setProperty("log4j.configurationFile", "./config/log4j2.xml");
         }
-        CONTEXT = new AnnotationConfigApplicationContext(KafkaConsumerConfig.class);
+        System.setProperty("spring.profiles.active","consumer");
+//        System.setProperty("spring.profiles.active", "listener");
+        CONTEXT = new AnnotationConfigApplicationContext(ConsumerApplicationConfig.class);
     }
 
     public static void main(String[] args) {

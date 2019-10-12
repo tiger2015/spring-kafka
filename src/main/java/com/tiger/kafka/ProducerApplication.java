@@ -1,7 +1,7 @@
 package com.tiger.kafka;
 
 
-import com.tiger.kafka.producer.KafkaProducerConfig;
+import com.tiger.kafka.producer.config.KafkaProducerConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.File;

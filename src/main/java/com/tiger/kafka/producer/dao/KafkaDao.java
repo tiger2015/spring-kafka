@@ -1,4 +1,4 @@
-package com.tiger.kafka.dao;
+package com.tiger.kafka.producer.dao;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
 

@@ -1,8 +1,7 @@
 package com.tiger.kafka.producer;
 
-import com.tiger.kafka.service.KafkaService;
+import com.tiger.kafka.producer.service.KafkaService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.core.appender.mom.kafka.KafkaProducerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -11,9 +11,14 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="INFO">
+        <Logger name="com.tiger.kafka.consumer" level="info">
             <Appender-Ref ref="Console"/>
             <Appender-Ref ref="RollingFile"/>
+        </Logger>
+        <Logger name="com.tiger.kafka.producer" level="info">
+            <Appender-Ref ref="Console"/>
+        </Logger>
+        <Root level="INFO">
         </Root>
     </Loggers>
 </Configuration>
