@@ -169,7 +169,7 @@
                                 </transformer>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.tiger.kafka.ProducerApplication</mainClass>
+                                    <mainClass>com.tiger.kafka.ConsumerApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

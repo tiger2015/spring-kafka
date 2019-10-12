@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Configuration
 @Slf4j
-@PropertySource(value = {"file:${user.dir}/config/application.properties","classpath:application.properties"},
+@PropertySource(value = {"file:${user.dir}/config/application.properties", "classpath:application.properties"},
         ignoreResourceNotFound = true)
 @ComponentScan(value = {"com.tiger.kafka.dao", "com.tiger.kafka.service", "com.tiger.kafka.producer"})
 public class KafkaProducerConfig {
@@ -29,6 +29,9 @@ public class KafkaProducerConfig {
 
     @Value("${kafka.producer.value.serializer}")
     private String valueSerializer;
+
+
+    public static String[] gridVrs;
 
     @Bean
     public Map<String, Object> producerProperties() {
@@ -50,5 +53,10 @@ public class KafkaProducerConfig {
     public KafkaTemplate kafkaTemplate(@Autowired ProducerFactory producerFactory) {
         KafkaTemplate kafkaTemplate = new KafkaTemplate(producerFactory);
         return kafkaTemplate;
+    }
+
+    @Value("${gridvrs}")
+    public void setGridVrs(String[] gridVrs) {
+        KafkaProducerConfig.gridVrs = gridVrs;
     }
 }

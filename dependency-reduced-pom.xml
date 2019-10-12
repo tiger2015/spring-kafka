@@ -7,15 +7,6 @@
   <version>1.0</version>
   <url>http://www.example.com</url>
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <excludes>
-          <exclude>**/*.xml</exclude>
-          <exclude>**/*.properties</exclude>
-        </excludes>
-      </resource>
-    </resources>
     <finalName>${project.name}-${project.version}</finalName>
     <plugins>
       <plugin>
@@ -61,7 +52,7 @@
                   <resource>META-INF/spring.schemas</resource>
                 </transformer>
                 <transformer>
-                  <mainClass>com.tiger.kafka.ProducerApplication</mainClass>
+                  <mainClass>com.tiger.kafka.ConsumerApplication</mainClass>
                 </transformer>
               </transformers>
             </configuration>
@@ -70,6 +61,36 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>pro</id>
+      <build>
+        <resources>
+          <resource>
+            <directory>E:\idea workspace\spring-kafka\src\main\resources</directory>
+            <excludes>
+              <exclude>**/*.xml</exclude>
+              <exclude>**/*.properties</exclude>
+            </excludes>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+    <profile>
+      <id>dev</id>
+      <build>
+        <resources>
+          <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+              <include>**/*.xml</include>
+              <include>**/*.properties</include>
+            </includes>
+          </resource>
+        </resources>
+      </build>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>

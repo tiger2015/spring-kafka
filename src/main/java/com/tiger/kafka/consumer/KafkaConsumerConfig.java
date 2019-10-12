@@ -3,6 +3,7 @@ package com.tiger.kafka.consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.OffsetAndTimestamp;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@PropertySource(value = {"file:${user.dir}/config/application.properties","classpath:application.properties"},
+@PropertySource(value = {"file:${user.dir}/config/application.properties", "classpath:application.properties"},
         ignoreResourceNotFound = true)
 @ComponentScan(value = {"com.tiger.kafka.consumer"})
 @EnableKafka
@@ -78,13 +79,14 @@ public class KafkaConsumerConfig {
         return props;
     }
 
-    private ConsumerFactory<String, String> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(kafkaConsumerConfig());
+    private ConsumerFactory consumerFactory() {
+        //return new DefaultKafkaConsumerFactory<>(kafkaConsumerConfig());
+        return new MyKafkaConsumerFactory<>(kafkaConsumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(currency);
@@ -95,20 +97,28 @@ public class KafkaConsumerConfig {
     }
 
 
-    @Bean
+   // @Bean
     public KafkaConsumer kafkaConsumer() {
         KafkaConsumer consumer = new KafkaConsumer(kafkaConsumerConfig());
         List<TopicPartition> topicPartitions = new ArrayList<>();
         for (String topic : topics) {
             List<PartitionInfo> list = consumer.partitionsFor(topic);
             for (PartitionInfo partitionInfo : list) {
-                log.info("partition info:" + partitionInfo.toString());
+                log.info("partition info: " + partitionInfo.toString());
                 topicPartitions.add(new TopicPartition(partitionInfo.topic(), partitionInfo.partition()));
             }
         }
-       // consumer.subscribe();
         consumer.assign(topicPartitions);
-        consumer.seekToEnd(topicPartitions);
+
+        // 指定到不同的时间戳进行消费
+        Map<TopicPartition, Long> map = new HashMap<>();
+        topicPartitions.forEach(partition -> map.put(partition, System.currentTimeMillis() - 24 * 3600 * 1000L));
+        Map<TopicPartition, OffsetAndTimestamp> offsetsForTimes = consumer.offsetsForTimes(map);
+        offsetsForTimes.forEach((key, value) -> consumer.seek(key, value.offset()));
+        //指定到最新位置进行消费
+        // consumer.seekToEnd(topicPartitions);
         return consumer;
     }
+
+
 }
